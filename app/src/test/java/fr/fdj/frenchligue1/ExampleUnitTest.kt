@@ -1,4 +1,4 @@
-package fr.fdj.frenchligue
+package fr.fdj.frenchligue1
 
 import org.junit.Test
 

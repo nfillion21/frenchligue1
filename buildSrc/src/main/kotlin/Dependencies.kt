@@ -15,4 +15,22 @@ object Dependencies {
     val androidTestComposeUi by lazy {"androidx.compose.ui:${Versions.androidTestComposeUi}"}
     val debugComposeUiTooling by lazy {"androidx.compose.ui:${Versions.debugComposeUiTooling}"}
     val debugComposeUiTestManifest by lazy {"androidx.compose.ui:${Versions.debugComposeUiTestManifest}"}
+
+    // Hilt
+    val hiltAndroid by lazy { "com.google.dagger:hilt-android:${Versions.hilt}" }
+    val hiltAndroidCompiler by lazy { "com.google.dagger:hilt-android-compiler:${Versions.hilt}" }
+
+    // Coroutine
+    val workRuntime by lazy { "androidx.work:work-runtime-ktx:${Versions.workRuntime}" }
+
+    // Room
+    val roomRuntine by lazy {"androidx.room:room-runtime:${Versions.room}"}
+    val roomKtx by lazy {"androidx.room:room-ktx:${Versions.room}"}
+    val roomCompiler by lazy {"androidx.room:room-compiler:${Versions.room}"}
+
+    // GSon
+    val gson by lazy {"com.google.code.gson:gson:${Versions.gson}"}
+
+    // ktor
+    val ktor by lazy {"io.ktor:ktor-client-android:${Versions.ktor}"}
 }

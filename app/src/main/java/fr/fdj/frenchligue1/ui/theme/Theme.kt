@@ -1,4 +1,4 @@
-package fr.fdj.frenchligue.ui.theme
+package fr.fdj.frenchligue1.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun FrenchLigueTheme(
+fun FrenchLigue1Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

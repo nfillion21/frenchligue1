@@ -1,4 +1,4 @@
-package fr.fdj.frenchligue
+package fr.fdj.frenchligue1
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,18 +10,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import fr.fdj.frenchligue.ui.theme.FrenchLigueTheme
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import fr.fdj.frenchligue1.ui.theme.FrenchLigue1Theme
+import fr.fdj.frenchligue1.utilities.LEAGUES_LIST_URL
+import fr.fdj.frenchligue1.workers.LeaguesDatabaseWorker
+import fr.fdj.frenchligue1.workers.LeaguesDatabaseWorker.Companion.LEAGUES_KEY_URL
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FrenchLigueTheme {
+            FrenchLigue1Theme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val workManager = WorkManager.getInstance(this)
+                    val requestTitles = OneTimeWorkRequestBuilder<LeaguesDatabaseWorker>()
+                        .setInputData(workDataOf(LEAGUES_KEY_URL to LEAGUES_LIST_URL))
+                        .build()
+                    workManager.enqueue(requestTitles)
                     Greeting("Android")
                 }
             }
@@ -40,7 +51,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    FrenchLigueTheme {
+    FrenchLigue1Theme {
         Greeting("Android")
     }
 }

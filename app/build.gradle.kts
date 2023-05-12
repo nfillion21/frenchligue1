@@ -1,14 +1,16 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "fr.fdj.frenchligue"
+    namespace = "fr.fdj.frenchligue1"
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = "fr.fdj.frenchligue"
+        applicationId = "fr.fdj.frenchligue1"
         minSdk = ConfigData.minSdkVersion
         targetSdk = ConfigData.targetSdkVersion
         versionCode = ConfigData.versionCode
@@ -70,4 +72,28 @@ dependencies {
     androidTestImplementation (Dependencies.androidTestComposeUi)
     debugImplementation (Dependencies.debugComposeUiTooling)
     debugImplementation (Dependencies.debugComposeUiTestManifest)
+
+    // Hilt
+    implementation (Dependencies.hiltAndroid)
+    kapt (Dependencies.hiltAndroidCompiler)
+
+    // Coroutines
+    implementation (Dependencies.workRuntime)
+
+    // Room
+    implementation (Dependencies.roomRuntine)
+    implementation (Dependencies.roomKtx)
+    annotationProcessor (Dependencies.roomCompiler)
+    kapt(Dependencies.roomCompiler)
+
+    // GSon
+    implementation (Dependencies.gson)
+
+    // ktor
+    implementation (Dependencies.ktor)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

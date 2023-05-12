@@ -1,4 +1,4 @@
-package fr.fdj.frenchligue.ui.theme
+package fr.fdj.frenchligue1.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

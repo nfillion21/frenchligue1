@@ -1,4 +1,4 @@
-package fr.fdj.frenchligue
+package fr.fdj.frenchligue1
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
