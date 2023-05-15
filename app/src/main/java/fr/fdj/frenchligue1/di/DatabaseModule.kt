@@ -21,7 +21,7 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideTitleDao(appDatabase: FrenchLigue1RoomDatabase): LeagueDao {
+    fun provideLeagueDao(appDatabase: FrenchLigue1RoomDatabase): LeagueDao {
         return appDatabase.leagueDao()
     }
 }

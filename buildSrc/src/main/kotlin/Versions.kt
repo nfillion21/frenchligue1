@@ -3,6 +3,7 @@ object Versions {
     const val lifeCycleRuntime = "2.3.1"
     const val activityCompose = "1.5.1"
 
+    const val composeNav = "2.5.3"
     const val composeBom = "2022.10.00"
     const val composeUi = "ui"
     const val composeGraphics = "ui-graphics"
@@ -26,4 +27,5 @@ object Versions {
     const val gson = "2.10.1"
 
     const val ktor = "2.3.0"
+    const val hiltNavigationComposeVersion = "1.0.0"
 }

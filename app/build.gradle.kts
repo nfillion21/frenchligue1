@@ -60,6 +60,7 @@ dependencies {
     implementation (Dependencies.coreAndroidX)
     implementation (Dependencies.lifeCycleRuntime)
     implementation (Dependencies.activityCompose)
+    implementation (Dependencies.composeNav)
     implementation (platform(Dependencies.composeBom))
     implementation (Dependencies.composeUi)
     implementation (Dependencies.composeGraphics)
@@ -91,6 +92,9 @@ dependencies {
 
     // ktor
     implementation (Dependencies.ktor)
+
+    // hilt navigation
+    implementation (Dependencies.hiltNavigationCompose)
 }
 
 // Allow references to generated code
