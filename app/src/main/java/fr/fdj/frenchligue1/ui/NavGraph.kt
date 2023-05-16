@@ -8,7 +8,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import fr.fdj.frenchligue1.ui.MainRoutes.B_LEAGUES_ROUTE
+import fr.fdj.frenchligue1.ui.MainRoutes.FL1_LEAGUES_ROUTE
 import fr.fdj.frenchligue1.ui.MainRoutes.LEAGUE_DETAILS_ID_KEY
 import fr.fdj.frenchligue1.ui.screens.Leagues
 import fr.fdj.frenchligue1.viewmodels.LeaguesUiModel
@@ -21,7 +21,7 @@ object MainRoutes {
     const val LEAGUES_ROUTE = "leagues"
     const val LEAGUE_DETAILS_ROUTE = "league"
     const val LEAGUE_DETAILS_ID_KEY = "leagueId"
-    const val B_LEAGUES_ROUTE = "frenchligue1/leagues"
+    const val FL1_LEAGUES_ROUTE = "frenchligue1/leagues"
 }
 
 @Composable
@@ -36,11 +36,9 @@ fun BuilderNavGraph(
         navController = navController, startDestination = startDestination
     ) {
         navigation(
-            route = MainRoutes.LEAGUES_ROUTE, startDestination = B_LEAGUES_ROUTE
+            route = MainRoutes.LEAGUES_ROUTE, startDestination = FL1_LEAGUES_ROUTE
         ) {
-
-            composable(B_LEAGUES_ROUTE) { navBackStackEntry ->
-
+            composable(FL1_LEAGUES_ROUTE) { navBackStackEntry ->
                 val leaguesViewModel: LeaguesViewModel = hiltViewModel()
                 val stateLeagues by leaguesViewModel.leaguesUiModelFlow.collectAsState(
                     initial = LeaguesUiModel(
@@ -53,7 +51,11 @@ fun BuilderNavGraph(
                         actions.openPlayerDetail(
                             league, navBackStackEntry
                         )
-                    })
+                    },
+                    filterLeague = { filterLeague ->
+                        leaguesViewModel.updateFilterLeagues(filterLeague)
+                    }
+                )
             }
         }
         composable(

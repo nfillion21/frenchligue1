@@ -10,13 +10,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -28,15 +28,15 @@ import fr.fdj.frenchligue1.viewmodels.LeaguesUiModel
 fun Leagues(
     stateLeagues: LeaguesUiModel,
     selectLeague: (String) -> Unit,
+    filterLeague: (String) -> Unit,
     modifier: Modifier
 ) {
+    val filterLeaguesState = stateLeagues.filterLeagues
+    val textState = remember { mutableStateOf(TextFieldValue(filterLeaguesState)) }
     Column(modifier = modifier.statusBarsPadding(),
     ) {
-        val textState = remember { mutableStateOf(TextFieldValue("")) }
-        SearchView(state = textState)
-
+        SearchView(state = textState, onValueChange = filterLeague)
         LazyColumn(modifier = Modifier.weight(1f)) {
-
             items(stateLeagues.leagues) { league ->
                 Text(
                     text = league.toString(),
@@ -56,20 +56,20 @@ fun Leagues(
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(
     modifier: Modifier = Modifier,
-    state: MutableState<TextFieldValue>
+    state: MutableState<TextFieldValue>,
+    onValueChange: (String) -> Unit,
 ) {
     TextField(
         value = state.value,
         onValueChange = { value ->
             state.value = value
+            onValueChange(value.text)
         },
         modifier = modifier.fillMaxWidth(),
-        textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.primary),
         leadingIcon = {
             Icon(
                 Icons.Default.Search,
@@ -85,6 +85,7 @@ fun SearchView(
                     onClick = {
                         state.value =
                             TextFieldValue("") // Remove text from TextField when you press the 'X' icon
+                        onValueChange("")
                     }
                 ) {
                     Icon(

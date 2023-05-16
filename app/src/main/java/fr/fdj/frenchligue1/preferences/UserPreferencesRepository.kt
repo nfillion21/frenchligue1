@@ -50,7 +50,7 @@ class UserPreferencesRepository @Inject constructor(private val dataStore: DataS
     }
 
     private fun mapUserPreferences(preferences: Preferences): UserPreferences {
-        val filterLeagues = preferences[PreferencesKeys.FILTER_LEAGUES] ?: "american"
+        val filterLeagues = preferences[PreferencesKeys.FILTER_LEAGUES] ?: ""
         return UserPreferences(filterLeagues)
     }
 }

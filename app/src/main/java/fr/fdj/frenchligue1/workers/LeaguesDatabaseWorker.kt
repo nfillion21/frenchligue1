@@ -26,7 +26,6 @@ class LeaguesDatabaseWorker(
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-
             val client = HttpClient(Android)
             val url = inputData.getString(LEAGUES_KEY_URL)
             val result: HttpResponse = client.get(url!!)

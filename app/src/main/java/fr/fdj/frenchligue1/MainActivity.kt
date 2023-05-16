@@ -31,21 +31,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FrenchLigue1Theme {
-                // A surface container using the 'background' color from the theme
-                /*
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val workManager = WorkManager.getInstance(this)
-                    val requestTitles = OneTimeWorkRequestBuilder<LeaguesDatabaseWorker>()
-                        .setInputData(workDataOf(LEAGUES_KEY_URL to LEAGUES_LIST_URL))
-                        .build()
-                    workManager.enqueue(requestTitles)
-                    Greeting("Android")
-                }
-                */
-
                 val navController = rememberNavController()
                 Scaffold { innerPaddingModifier ->
                     BuilderNavGraph(
