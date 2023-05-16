@@ -26,8 +26,8 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -57,44 +57,47 @@ android {
 
 dependencies {
 
-    implementation (Dependencies.coreAndroidX)
-    implementation (Dependencies.lifeCycleRuntime)
-    implementation (Dependencies.activityCompose)
-    implementation (Dependencies.composeNav)
-    implementation (platform(Dependencies.composeBom))
-    implementation (Dependencies.composeUi)
-    implementation (Dependencies.composeGraphics)
-    implementation (Dependencies.composeUiToolingPreview)
-    implementation (Dependencies.composeMaterial3)
-    testImplementation (Dependencies.junit)
-    androidTestImplementation (Dependencies.androidTestJUnit)
-    androidTestImplementation (Dependencies.androidTestEspresso)
-    androidTestImplementation (platform(Dependencies.androidTestComposeBom))
-    androidTestImplementation (Dependencies.androidTestComposeUi)
-    debugImplementation (Dependencies.debugComposeUiTooling)
-    debugImplementation (Dependencies.debugComposeUiTestManifest)
+    implementation(Dependencies.coreAndroidX)
+    implementation(Dependencies.lifeCycleRuntime)
+    implementation(Dependencies.activityCompose)
+    implementation(Dependencies.composeNav)
+    implementation(platform(Dependencies.composeBom))
+    implementation(Dependencies.composeUi)
+    implementation(Dependencies.composeGraphics)
+    implementation(Dependencies.composeUiToolingPreview)
+    implementation(Dependencies.composeMaterial3)
+    testImplementation(Dependencies.junit)
+    androidTestImplementation(Dependencies.androidTestJUnit)
+    androidTestImplementation(Dependencies.androidTestEspresso)
+    androidTestImplementation(platform(Dependencies.androidTestComposeBom))
+    androidTestImplementation(Dependencies.androidTestComposeUi)
+    debugImplementation(Dependencies.debugComposeUiTooling)
+    debugImplementation(Dependencies.debugComposeUiTestManifest)
 
     // Hilt
-    implementation (Dependencies.hiltAndroid)
-    kapt (Dependencies.hiltAndroidCompiler)
+    implementation(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltAndroidCompiler)
 
     // Coroutines
-    implementation (Dependencies.workRuntime)
+    implementation(Dependencies.workRuntime)
 
     // Room
-    implementation (Dependencies.roomRuntine)
-    implementation (Dependencies.roomKtx)
-    annotationProcessor (Dependencies.roomCompiler)
+    implementation(Dependencies.roomRuntine)
+    implementation(Dependencies.roomKtx)
+    annotationProcessor(Dependencies.roomCompiler)
     kapt(Dependencies.roomCompiler)
 
     // GSon
-    implementation (Dependencies.gson)
+    implementation(Dependencies.gson)
 
     // ktor
-    implementation (Dependencies.ktor)
+    implementation(Dependencies.ktor)
 
     // hilt navigation
-    implementation (Dependencies.hiltNavigationCompose)
+    implementation(Dependencies.hiltNavigationCompose)
+
+    // datastore
+    implementation(Dependencies.datastorePreferences)
 }
 
 // Allow references to generated code

@@ -4,29 +4,40 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import fr.fdj.frenchligue1.data.League
+import fr.fdj.frenchligue1.viewmodels.LeaguesUiModel
 
 @Composable
 fun Leagues(
-    stateLeagues: List<League>,
+    stateLeagues: LeaguesUiModel,
     selectLeague: (String) -> Unit,
     modifier: Modifier
 ) {
-    Column(modifier = modifier.statusBarsPadding()) {
+    Column(modifier = modifier.statusBarsPadding(),
+    ) {
+        val textState = remember { mutableStateOf(TextFieldValue("")) }
+        SearchView(state = textState)
 
         LazyColumn(modifier = Modifier.weight(1f)) {
-            /*
-            item {
-                CoursesAppBar()
-            }
-            */
 
-            items(stateLeagues) { league ->
+            items(stateLeagues.leagues) { league ->
                 Text(
                     text = league.toString(),
                     modifier = Modifier
@@ -42,111 +53,51 @@ fun Leagues(
                 )
             }
         }
-
-        /*
-        Row(modifier = Modifier.padding(all = 16.dp)) {
-            Icon(
-                imageVector = Icons.Default.Reorder,
-                contentDescription = null,
-                tint = LocalContentColor.current.copy(alpha = 0.5f),
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            val sortOrder = statePlayers?.sortOrder ?: SortOrder.NONE
-
-            SortChip(
-                text = "Name",
-                selected = sortOrder == SortOrder.BY_NAME
-                        || sortOrder == SortOrder.BY_NAME_AND_PRICE,
-                setSelected = enableSortByName,
-                shape = RoundedCornerShape(14.dp)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            SortChip(
-                text = "Price",
-                selected = sortOrder == SortOrder.BY_PRICE
-                        || sortOrder == SortOrder.BY_NAME_AND_PRICE,
-                setSelected = enableSortBySide,
-                shape = RoundedCornerShape(14.dp)
-            )
-        }
-
-        Row(modifier = Modifier.padding(all = 16.dp)) {
-            Icon(
-                imageVector = Icons.Default.Sort,
-                contentDescription = null,
-                tint = LocalContentColor.current.copy(alpha = 0.5f),
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Text(
-                modifier = Modifier.wrapContentWidth(),
-                text = "Show villains only",
-                style = MaterialTheme.typography.subtitle1
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            val showVillains = statePlayers?.showVillains ?: false
-            Checkbox(
-                checked = showVillains,
-                onCheckedChange = switchShowVillains
-            )
-        }
-        */
     }
 }
 
-/*
-@OptIn(ExperimentalAnimationApi::class)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SortChip(
-    text: String,
-    selected: Boolean,
-    setSelected: (Boolean) -> Unit,
+fun SearchView(
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.small,
+    state: MutableState<TextFieldValue>
 ) {
-    Surface(
-        modifier = modifier.height(28.dp),
-        color = MaterialTheme.colors.secondary,
-        shape = shape,
-        elevation = 2.dp
-    ) {
-        Box(
-            modifier = Modifier.toggleable(
-                value = selected,
-                onValueChange = setSelected,
+    TextField(
+        value = state.value,
+        onValueChange = { value ->
+            state.value = value
+        },
+        modifier = modifier.fillMaxWidth(),
+        textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.primary),
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(24.dp)
             )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(
-                    horizontal = 8.dp,
-                    vertical = 6.dp
-                )
-            ) {
-                AnimatedVisibility(visible = selected) {
+        },
+        trailingIcon = {
+            if (state.value != TextFieldValue("")) {
+                IconButton(
+                    onClick = {
+                        state.value =
+                            TextFieldValue("") // Remove text from TextField when you press the 'X' icon
+                    }
+                ) {
                     Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = null,
-                        modifier = Modifier.width(24.dp),
+                        Icons.Default.Close,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .size(24.dp)
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
                 }
-
-                Text(
-                    text = text,
-                    style = MaterialTheme.typography.caption,
-                    maxLines = 1,
-
-                    )
             }
-        }
-    }
+        },
+        singleLine = true,
+        shape = RectangleShape
+    )
 }
-*/

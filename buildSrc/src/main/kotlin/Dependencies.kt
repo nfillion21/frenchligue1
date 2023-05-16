@@ -37,4 +37,7 @@ object Dependencies {
     // ktor
     val ktor by lazy {"io.ktor:ktor-client-android:${Versions.ktor}"}
 
+    // datastore
+    val datastorePreferences by lazy {"androidx.datastore:datastore-preferences:${Versions.datastoreVersion}"}
+
 }

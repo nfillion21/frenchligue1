@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import fr.fdj.frenchligue1.ui.MainRoutes.B_LEAGUES_ROUTE
 import fr.fdj.frenchligue1.ui.MainRoutes.LEAGUE_DETAILS_ID_KEY
 import fr.fdj.frenchligue1.ui.screens.Leagues
+import fr.fdj.frenchligue1.viewmodels.LeaguesUiModel
 import fr.fdj.frenchligue1.viewmodels.LeaguesViewModel
 
 /**
@@ -32,35 +33,34 @@ fun BuilderNavGraph(
     val actions = remember(navController) { MainActions(navController) }
 
     NavHost(
-        navController = navController,
-        startDestination = startDestination
+        navController = navController, startDestination = startDestination
     ) {
         navigation(
-            route = MainRoutes.LEAGUES_ROUTE,
-            startDestination = B_LEAGUES_ROUTE
+            route = MainRoutes.LEAGUES_ROUTE, startDestination = B_LEAGUES_ROUTE
         ) {
 
             composable(B_LEAGUES_ROUTE) { navBackStackEntry ->
 
                 val leaguesViewModel: LeaguesViewModel = hiltViewModel()
-                val stateLeagues by leaguesViewModel.allLeagues.collectAsState(initial = emptyList())
-                Leagues(
-                    modifier = modifier,
+                val stateLeagues by leaguesViewModel.leaguesUiModelFlow.collectAsState(
+                    initial = LeaguesUiModel(
+                        leagues = emptyList(), filterLeagues = ""
+                    )
+                )
+                Leagues(modifier = modifier,
                     stateLeagues = stateLeagues,
                     selectLeague = { league ->
                         actions.openPlayerDetail(
-                            league,
-                            navBackStackEntry
+                            league, navBackStackEntry
                         )
-                    }
-                )
+                    })
             }
         }
         composable(
             "${MainRoutes.LEAGUE_DETAILS_ROUTE}/{$LEAGUE_DETAILS_ID_KEY}",
-            arguments = listOf(
-                navArgument(LEAGUE_DETAILS_ID_KEY) { type = NavType.StringType }
-            )
+            arguments = listOf(navArgument(LEAGUE_DETAILS_ID_KEY) {
+                type = NavType.StringType
+            })
         ) { backStackEntry: NavBackStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
             val currentCourseId = arguments.getString(LEAGUE_DETAILS_ID_KEY)

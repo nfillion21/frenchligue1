@@ -1,6 +1,10 @@
 package fr.fdj.frenchligue1.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +28,13 @@ class DatabaseModule {
     fun provideLeagueDao(appDatabase: FrenchLigue1RoomDatabase): LeagueDao {
         return appDatabase.leagueDao()
     }
+
+    @Provides
+    @Singleton
+    fun providePreferencesDataStore(@ApplicationContext appContext: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create(
+            produceFile = {
+                appContext.preferencesDataStoreFile("preferences")
+            }
+        )
 }
