@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class Team(
     @PrimaryKey (autoGenerate = false) val idTeam: String,
     val strTeam: String,
-    val strTeamLogo: String?
+    val strTeamBadge: String?
 )

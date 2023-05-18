@@ -76,8 +76,8 @@ fun BuilderNavGraph(
         ) { backStackEntry: NavBackStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
             val leagueId = arguments.getString(LEAGUE_ID_KEY)
-            leagueId?.let { leagueId ->
-                val leagueWithTeams by leaguesViewModel.getLeagueWithTeams(leagueId).collectAsState(
+            leagueId?.let { idLeague ->
+                val leagueWithTeams by leaguesViewModel.getLeagueWithTeams(idLeague).collectAsState(
                     initial = LeagueWithTeams(
                         league = League(
                             idLeague = "",
@@ -115,4 +115,4 @@ class MainActions(navController: NavHostController) {
  * This is used to de-duplicate navigation events.
  */
 private fun NavBackStackEntry.lifecycleIsResumed() =
-    this.lifecycle.currentState == Lifecycle.State.RESUMED
+    this.getLifecycle().currentState == Lifecycle.State.RESUMED

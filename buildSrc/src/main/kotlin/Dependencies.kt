@@ -40,4 +40,6 @@ object Dependencies {
     // datastore
     val datastorePreferences by lazy {"androidx.datastore:datastore-preferences:${Versions.datastoreVersion}"}
 
+    val coilCompose by lazy {"io.coil-kt:coil-compose:${Versions.coilCompose}"}
+
 }

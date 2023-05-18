@@ -98,6 +98,9 @@ dependencies {
 
     // datastore
     implementation(Dependencies.datastorePreferences)
+
+    // coil
+    implementation(Dependencies.coilCompose)
 }
 
 // Allow references to generated code

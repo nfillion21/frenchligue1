@@ -22,4 +22,5 @@ object Versions {
     const val ktor = "2.3.0"
     const val hiltNavigationComposeVersion = "1.0.0"
     const val datastoreVersion = "1.0.0"
+    const val coilCompose = "2.3.0"
 }
