@@ -55,16 +55,21 @@ class LeaguesViewModel @Inject internal constructor(
         }
     }
 
-    //TODO set league parameter
-    fun launchWorkManager(context:Context) {
+    fun launchTeamsWorkManager(context: Context, league: League) {
         val workManager = WorkManager.getInstance(context)
         val requestTeams = OneTimeWorkRequestBuilder<TeamsDatabaseWorker>()
-            .setInputData(workDataOf(TeamsDatabaseWorker.TEAMS_KEY_URL to TEAMS_LIST_URL))
+            .setInputData(
+                workDataOf(
+                    TeamsDatabaseWorker.TEAMS_KEY_URL to TEAMS_LIST_URL,
+                    TeamsDatabaseWorker.STR_LEAGUE_KEY_URL to league.strLeague,
+                    TeamsDatabaseWorker.ID_LEAGUE_KEY_URL to league.idLeague
+                )
+            )
             .build()
         workManager.enqueue(requestTeams)
     }
 
-    fun getLeagueWithTeams(leagueId:String): Flow<LeagueWithTeams> {
+    fun getLeagueWithTeams(leagueId: String): Flow<LeagueWithTeams> {
         return leaguesRepository.getLeagueWithTeams(leagueId)
     }
 }

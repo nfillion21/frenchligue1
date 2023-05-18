@@ -27,14 +27,16 @@ class TeamsDatabaseWorker(
         try {
             val client = HttpClient(Android)
             val url = inputData.getString(TEAMS_KEY_URL)
-            val result: HttpResponse = client.get(url!!)
+            val strLeague = inputData.getString(STR_LEAGUE_KEY_URL)
+            val idLeague = inputData.getString(ID_LEAGUE_KEY_URL)
+            val result: HttpResponse = client.get(url+strLeague)
 
             if (result.status == HttpStatusCode.OK) {
                 val json = Gson().fromJson(result.bodyAsText(), JsonObject::class.java)
                 val teamType = object : TypeToken<List<Team>>() {}.type
                 val teamList: List<Team> = Gson().fromJson(json["teams"], teamType)
                 val leagueTeamCrossRefMutableList =
-                    teamList.map { LeagueTeamCrossRef(idLeague = "4334", idTeam = it.idTeam) }
+                    teamList.map { LeagueTeamCrossRef(idLeague = idLeague!!, idTeam = it.idTeam) }
 
                 val database = FrenchLigue1RoomDatabase.getInstance(applicationContext)
                 database.leagueTeamCrossRefDao().insertAll(leagueTeamCrossRefMutableList)
@@ -54,5 +56,7 @@ class TeamsDatabaseWorker(
     companion object {
         private const val TAG = "TeamsDatabaseWorker"
         const val TEAMS_KEY_URL = "TEAMS_KEY_URL"
+        const val STR_LEAGUE_KEY_URL = "STR_LEAGUE_KEY_URL"
+        const val ID_LEAGUE_KEY_URL = "ID_LEAGUE_KEY_URL"
     }
 }

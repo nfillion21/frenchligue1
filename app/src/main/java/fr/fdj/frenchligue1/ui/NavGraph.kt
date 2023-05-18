@@ -53,10 +53,13 @@ fun BuilderNavGraph(
                 Leagues(modifier = modifier,
                     stateLeagues = stateLeagues,
                     selectLeague = { league ->
-                        actions.openPlayerDetail(
-                            league, navBackStackEntry
+                        actions.openTeams(
+                            league.idLeague, navBackStackEntry
                         )
-                        leaguesViewModel.launchWorkManager(context)
+                        leaguesViewModel.launchTeamsWorkManager(
+                            context = context,
+                            league = league
+                        )
 
                     },
                     filterLeague = { filterLeague ->
@@ -74,13 +77,6 @@ fun BuilderNavGraph(
             val arguments = requireNotNull(backStackEntry.arguments)
             val leagueId = arguments.getString(LEAGUE_ID_KEY)
             leagueId?.let { leagueId ->
-                /*
-                val stateLeagues by leaguesViewModel.leaguesUiModelFlow.collectAsState(
-                    initial = LeaguesUiModel(
-                        leagues = emptyList(), filterLeagues = ""
-                    )
-                )
-                */
                 val leagueWithTeams by leaguesViewModel.getLeagueWithTeams(leagueId).collectAsState(
                     initial = LeagueWithTeams(
                         league = League(
@@ -105,7 +101,7 @@ fun BuilderNavGraph(
  */
 class MainActions(navController: NavHostController) {
     // Used from COURSES_ROUTE
-    val openPlayerDetail = { leagueId: String, from: NavBackStackEntry ->
+    val openTeams = { leagueId: String, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainRoutes.TEAMS_ROUTE}/$leagueId")

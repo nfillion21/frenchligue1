@@ -22,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import fr.fdj.frenchligue1.data.League
 import fr.fdj.frenchligue1.viewmodels.LeaguesUiModel
 
 @Composable
 fun Leagues(
     stateLeagues: LeaguesUiModel,
-    selectLeague: (String) -> Unit,
+    selectLeague: (League) -> Unit,
     filterLeague: (String) -> Unit,
     modifier: Modifier
 ) {
@@ -42,7 +43,7 @@ fun Leagues(
                     text = league.toString(),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = { selectLeague(league.idLeague) })
+                        .clickable(onClick = { selectLeague(league) })
                         .padding(
                             start = 16.dp,
                             top = 8.dp,
