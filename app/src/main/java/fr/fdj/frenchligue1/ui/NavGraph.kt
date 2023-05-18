@@ -89,7 +89,8 @@ fun BuilderNavGraph(
                 )
                 Teams(
                     modifier = modifier,
-                    leagueWithTeams = leagueWithTeams
+                    leagueWithTeams = leagueWithTeams,
+                    upPress = { actions.upPress(backStackEntry) }
                 )
             }
         }
@@ -100,11 +101,19 @@ fun BuilderNavGraph(
  * Models the navigation actions in the app.
  */
 class MainActions(navController: NavHostController) {
-    // Used from COURSES_ROUTE
+    // Used from LEAGUES
     val openTeams = { leagueId: String, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainRoutes.TEAMS_ROUTE}/$leagueId")
+        }
+    }
+
+    // Used from TEAMS
+    val upPress: (from: NavBackStackEntry) -> Unit = { from ->
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigateUp()
         }
     }
 }

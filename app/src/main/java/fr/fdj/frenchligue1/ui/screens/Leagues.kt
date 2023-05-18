@@ -34,13 +34,12 @@ fun Leagues(
 ) {
     val filterLeaguesState = stateLeagues.filterLeagues
     val textState = remember { mutableStateOf(TextFieldValue(filterLeaguesState)) }
-    Column(modifier = modifier.statusBarsPadding(),
-    ) {
+    Column(modifier = modifier.statusBarsPadding()) {
         SearchView(state = textState, onValueChange = filterLeague)
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(stateLeagues.leagues) { league ->
                 Text(
-                    text = league.toString(),
+                    text = league.strLeague,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable(onClick = { selectLeague(league) })
@@ -74,7 +73,7 @@ fun SearchView(
         leadingIcon = {
             Icon(
                 Icons.Default.Search,
-                contentDescription = "",
+                contentDescription = null,
                 modifier = Modifier
                     .padding(15.dp)
                     .size(24.dp)
@@ -91,7 +90,7 @@ fun SearchView(
                 ) {
                     Icon(
                         Icons.Default.Close,
-                        contentDescription = "",
+                        contentDescription = null,
                         modifier = Modifier
                             .padding(15.dp)
                             .size(24.dp)
