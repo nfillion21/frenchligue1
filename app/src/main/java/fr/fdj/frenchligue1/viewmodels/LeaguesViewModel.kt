@@ -8,10 +8,10 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.fdj.frenchligue1.data.League
+import fr.fdj.frenchligue1.data.LeagueWithTeams
 import fr.fdj.frenchligue1.data.LeaguesRepository
 import fr.fdj.frenchligue1.preferences.UserPreferences
 import fr.fdj.frenchligue1.preferences.UserPreferencesRepository
-import fr.fdj.frenchligue1.utilities.LEAGUES_LIST_URL
 import fr.fdj.frenchligue1.utilities.TEAMS_LIST_URL
 import fr.fdj.frenchligue1.workers.TeamsDatabaseWorker
 import kotlinx.coroutines.flow.Flow
@@ -26,8 +26,8 @@ data class LeaguesUiModel(
 
 @HiltViewModel
 class LeaguesViewModel @Inject internal constructor(
-    leaguesRepository: LeaguesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val leaguesRepository: LeaguesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
     private val allLeagues: Flow<List<League>> = leaguesRepository.allLeagues
     val leaguesUiModelFlow: Flow<LeaguesUiModel> =
@@ -62,5 +62,9 @@ class LeaguesViewModel @Inject internal constructor(
             .setInputData(workDataOf(TeamsDatabaseWorker.TEAMS_KEY_URL to TEAMS_LIST_URL))
             .build()
         workManager.enqueue(requestTeams)
+    }
+
+    fun getLeagueWithTeams(leagueId:String): Flow<LeagueWithTeams> {
+        return leaguesRepository.getLeagueWithTeams(leagueId)
     }
 }

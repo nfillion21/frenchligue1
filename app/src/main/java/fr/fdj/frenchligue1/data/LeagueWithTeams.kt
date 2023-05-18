@@ -9,5 +9,5 @@ data class LeagueWithTeams(
         entityColumn = "idTeam",
         associateBy = Junction(LeagueTeamCrossRef::class)
     )
-    val players: List<Team>
+    val teams: List<Team>
 )

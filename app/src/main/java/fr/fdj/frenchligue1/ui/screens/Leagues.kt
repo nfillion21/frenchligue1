@@ -42,7 +42,7 @@ fun Leagues(
                     text = league.toString(),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = { selectLeague(league.strLeague) })
+                        .clickable(onClick = { selectLeague(league.idLeague) })
                         .padding(
                             start = 16.dp,
                             top = 8.dp,

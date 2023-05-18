@@ -8,7 +8,4 @@ import androidx.room.OnConflictStrategy
 interface LeagueTeamCrossRefDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(leagueTeamCrossRef: List<LeagueTeamCrossRef>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(leagueTeamCrossRef: LeagueTeamCrossRef)
 }
