@@ -13,4 +13,8 @@ interface LeagueDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(leagues: List<League>)
+
+    @Transaction
+    @Query("select * from league where idLeague = :leagueId")
+    fun getLeagueWithTeams(leagueId: String): Flow<LeagueWithTeams>
 }

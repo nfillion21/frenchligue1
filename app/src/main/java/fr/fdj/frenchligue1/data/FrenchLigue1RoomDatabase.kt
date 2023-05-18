@@ -13,10 +13,12 @@ import fr.fdj.frenchligue1.utilities.LEAGUES_LIST_URL
 import fr.fdj.frenchligue1.workers.LeaguesDatabaseWorker
 import fr.fdj.frenchligue1.workers.LeaguesDatabaseWorker.Companion.LEAGUES_KEY_URL
 
-@Database(entities = [League::class], version = 1, exportSchema = false)
+@Database(entities = [League::class, Team::class, LeagueTeamCrossRef::class], version = 1, exportSchema = false)
 abstract class FrenchLigue1RoomDatabase : RoomDatabase() {
 
     abstract fun leagueDao(): LeagueDao
+    abstract fun teamDao(): TeamDao
+    abstract fun leagueTeamCrossRefDao(): LeagueTeamCrossRefDao
 
     companion object {
         @Volatile
@@ -46,7 +48,6 @@ abstract class FrenchLigue1RoomDatabase : RoomDatabase() {
                 super.onCreate(db)
 
                 val workManager = WorkManager.getInstance(context)
-
                 val requestLeagues = OneTimeWorkRequestBuilder<LeaguesDatabaseWorker>()
                     .setInputData(workDataOf(LEAGUES_KEY_URL to LEAGUES_LIST_URL))
                     .build()

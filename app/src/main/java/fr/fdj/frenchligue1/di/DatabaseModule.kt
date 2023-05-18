@@ -12,6 +12,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import fr.fdj.frenchligue1.data.FrenchLigue1RoomDatabase
 import fr.fdj.frenchligue1.data.LeagueDao
+import fr.fdj.frenchligue1.data.LeagueTeamCrossRefDao
+import fr.fdj.frenchligue1.data.TeamDao
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -27,6 +29,16 @@ class DatabaseModule {
     @Provides
     fun provideLeagueDao(appDatabase: FrenchLigue1RoomDatabase): LeagueDao {
         return appDatabase.leagueDao()
+    }
+
+    @Provides
+    fun provideTeamDao(appDatabase: FrenchLigue1RoomDatabase): TeamDao {
+        return appDatabase.teamDao()
+    }
+
+    @Provides
+    fun provideLeagueTeamCrossRefDao(appDatabase: FrenchLigue1RoomDatabase): LeagueTeamCrossRefDao {
+        return appDatabase.leagueTeamCrossRefDao()
     }
 
     @Provides
