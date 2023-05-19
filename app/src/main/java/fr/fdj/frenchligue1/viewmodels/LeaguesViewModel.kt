@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import okhttp3.internal.toImmutableList
 import javax.inject.Inject
 
 data class LeaguesUiModel(
@@ -71,13 +72,13 @@ class LeaguesViewModel @Inject internal constructor(
         return leagueWithTeams(leagueId).map { leagueWithTeams ->
             with(leagueWithTeams) {
                 val sortedList = teams.sortedByDescending { it.strTeam }
-                var stepTwoList = mutableListOf<Team>()
+                val stepTwoList = mutableListOf<Team>()
                 for (i in sortedList.indices step 2) {
                     stepTwoList.add(sortedList[i])
                 }
 
                 LeagueWithTeams(
-                    league = league, teams = stepTwoList.toList()
+                    league = league, teams = stepTwoList
                 )
             }
         }
