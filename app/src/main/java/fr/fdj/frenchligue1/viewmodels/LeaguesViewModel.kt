@@ -10,18 +10,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.fdj.frenchligue1.data.League
 import fr.fdj.frenchligue1.data.LeagueWithTeams
 import fr.fdj.frenchligue1.data.LeaguesRepository
+import fr.fdj.frenchligue1.data.Team
 import fr.fdj.frenchligue1.preferences.UserPreferences
 import fr.fdj.frenchligue1.preferences.UserPreferencesRepository
 import fr.fdj.frenchligue1.utilities.TEAMS_LIST_URL
 import fr.fdj.frenchligue1.workers.TeamsDatabaseWorker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class LeaguesUiModel(
-    val leagues: List<League>,
-    val filterLeagues: String
+    val leagues: List<League>, val filterLeagues: String
 )
 
 @HiltViewModel
@@ -34,10 +35,8 @@ class LeaguesViewModel @Inject internal constructor(
         allLeagues.combine(userPreferencesRepository.userPreferencesFlow) { leagues: List<League>, userPreferences: UserPreferences ->
             LeaguesUiModel(
                 leagues = filteredLeagues(
-                    leagues = leagues,
-                    filterLeagues = userPreferences.filterLeagues
-                ),
-                filterLeagues = userPreferences.filterLeagues
+                    leagues = leagues, filterLeagues = userPreferences.filterLeagues
+                ), filterLeagues = userPreferences.filterLeagues
             )
         }
 
@@ -57,19 +56,30 @@ class LeaguesViewModel @Inject internal constructor(
 
     fun launchTeamsWorkManager(context: Context, league: League) {
         val workManager = WorkManager.getInstance(context)
-        val requestTeams = OneTimeWorkRequestBuilder<TeamsDatabaseWorker>()
-            .setInputData(
-                workDataOf(
-                    TeamsDatabaseWorker.TEAMS_KEY_URL to TEAMS_LIST_URL,
-                    TeamsDatabaseWorker.STR_LEAGUE_KEY_URL to league.strLeague,
-                    TeamsDatabaseWorker.ID_LEAGUE_KEY_URL to league.idLeague
-                )
+        val requestTeams = OneTimeWorkRequestBuilder<TeamsDatabaseWorker>().setInputData(
+            workDataOf(
+                TeamsDatabaseWorker.TEAMS_KEY_URL to TEAMS_LIST_URL,
+                TeamsDatabaseWorker.STR_LEAGUE_KEY_URL to league.strLeague,
+                TeamsDatabaseWorker.ID_LEAGUE_KEY_URL to league.idLeague
             )
-            .build()
+        ).build()
         workManager.enqueue(requestTeams)
     }
 
-    fun getLeagueWithTeams(leagueId: String): Flow<LeagueWithTeams> {
-        return leaguesRepository.getLeagueWithTeams(leagueId)
+    private fun leagueWithTeams(leagueId: String) = leaguesRepository.getLeagueWithTeams(leagueId)
+    fun getSortedStep2LeagueWithTeams(leagueId: String): Flow<LeagueWithTeams> {
+        return leagueWithTeams(leagueId).map { leagueWithTeams ->
+            with(leagueWithTeams) {
+                val sortedList = teams.sortedByDescending { it.strTeam }
+                var stepTwoList = mutableListOf<Team>()
+                for (i in sortedList.indices step 2) {
+                    stepTwoList.add(sortedList[i])
+                }
+
+                LeagueWithTeams(
+                    league = league, teams = stepTwoList.toList()
+                )
+            }
+        }
     }
 }

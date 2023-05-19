@@ -32,9 +32,9 @@ fun Teams(
     Column(modifier = modifier.statusBarsPadding()) {
         TopAppBar(league = leagueWithTeams.league, upPress = upPress)
         LazyColumn {
-            items(leagueWithTeams.teams) { league ->
+            items(leagueWithTeams.teams) { team ->
                 Text(
-                    text = league.toString(),
+                    text = team.strTeam,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
@@ -46,7 +46,7 @@ fun Teams(
                         .wrapContentWidth(Alignment.Start)
                 )
                 SubcomposeAsyncImage(
-                    model = league.strTeamBadge,
+                    model = team.strTeamBadge,
                     loading = {
                         CircularProgressIndicator()
                     },

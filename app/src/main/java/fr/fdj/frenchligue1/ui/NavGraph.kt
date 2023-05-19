@@ -60,7 +60,6 @@ fun BuilderNavGraph(
                             context = context,
                             league = league
                         )
-
                     },
                     filterLeague = { filterLeague ->
                         leaguesViewModel.updateFilterLeagues(filterLeague)
@@ -77,7 +76,7 @@ fun BuilderNavGraph(
             val arguments = requireNotNull(backStackEntry.arguments)
             val leagueId = arguments.getString(LEAGUE_ID_KEY)
             leagueId?.let { idLeague ->
-                val leagueWithTeams by leaguesViewModel.getLeagueWithTeams(idLeague).collectAsState(
+                val leagueWithTeams by leaguesViewModel.getSortedStep2LeagueWithTeams(idLeague).collectAsState(
                     initial = LeagueWithTeams(
                         league = League(
                             idLeague = "",
