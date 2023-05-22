@@ -9,7 +9,6 @@ object Dependencies {
     val composeUiToolingPreview by lazy {"androidx.compose.ui:ui-tooling-preview"}
     val composeMaterial3 by lazy {"androidx.compose.material3:material3"}
 
-
     val junit by lazy {"junit:junit:${Versions.junit}"}
     val androidTestJUnit by lazy {"androidx.test.ext:junit:${Versions.androidTestJUnit}"}
     val androidTestEspresso by lazy {"androidx.test.espresso:espresso-core:${Versions.androidTestEspresso}"}
@@ -25,6 +24,7 @@ object Dependencies {
 
     // Coroutine
     val workRuntime by lazy { "androidx.work:work-runtime-ktx:${Versions.workRuntime}" }
+    val workTesting by lazy {"androidx.work:work-testing:${Versions.workRuntime}"}
 
     // Room
     val roomRuntine by lazy {"androidx.room:room-runtime:${Versions.room}"}

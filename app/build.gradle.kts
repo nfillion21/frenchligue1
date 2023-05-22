@@ -80,6 +80,7 @@ dependencies {
 
     // Coroutines
     implementation(Dependencies.workRuntime)
+    implementation(Dependencies.workTesting)
 
     // Room
     implementation(Dependencies.roomRuntine)
